@@ -153,6 +153,20 @@ func (suite *MasterAnswerRouteTestSuite) TestMasterAnswersDetailRoute() {
 	assert.Equal(suite.T(), w.Code, 200)
 }
 
+func (suite *MasterAnswerRouteTestSuite) TestMasterAnswersByQuestionRoute() {
+	// Switch to test mode so you don't get such noisy output
+	gin.SetMode(gin.TestMode)
+
+	w := httptest.NewRecorder()
+
+	r := gin.Default()
+	r.GET("masterAnswer/byQuestion/1", MasterAnswersByQuestion)
+	req, _ := http.NewRequest(http.MethodGet, "/masterAnswer/byQuestion/1", nil)
+
+	r.ServeHTTP(w, req)
+	assert.Equal(suite.T(), w.Code, 200)
+}
+
 func TestMasterAnswerRouteTestSuite(t *testing.T) {
 	suite.Run(t, new(MasterAnswerRouteTestSuite))
 }
