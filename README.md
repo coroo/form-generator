@@ -74,8 +74,7 @@ cp .env.example .env
 
 ## Unit Test
 ```
-cp .env test/.env
-go clean -testcache && cd test && go test -v && cd ..
+go test -coverprofile cp.out -v ./... && go tool cover -html=cp.out
 ```
 
 ## Update Swagger Documentation

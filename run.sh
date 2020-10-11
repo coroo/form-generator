@@ -68,13 +68,35 @@ do
         ;;
 	2)
         echo "Please wait ..."
-        cp .env test/.env
-        cd test
-        mkdir -p tmp
-        echo "\nDB_TEST=$(pwd)/tmp/superyou_ods_test.db" >> .env
-        cd ..
-        go clean -testcache && cd test && go test -v && cd ..
-        break
+        echo "============================================"
+        echo "Run for: "
+        echo "1. Default Unit Test"
+        echo "2. Coverage Unit Test"
+        echo "0. Back\n"
+        echo "Your Answer:"
+        while :
+        do
+            read IDE
+            case $IDE in
+                1)
+                    echo "Default Unit Test"
+                    go test ./...
+                    bye_statement
+                    exit
+                    ;;
+                2)
+                    echo "Coverage Unit Test"
+                    go test -coverprofile cp.out -v ./... && go tool cover -html=cp.out
+                    bye_statement
+                    exit
+                    ;;
+                0)
+                    echo
+                    main_question
+                    break
+                    ;;
+            esac
+        done
 		;;
 	3)
         { # try 1 // Running Swag

@@ -3,3 +3,4 @@ storage/logs/*
 test/.env
 test/tmp
 docs
+cp.out
