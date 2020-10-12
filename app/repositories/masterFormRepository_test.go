@@ -33,7 +33,7 @@ func (suite *MasterFormRepositoryTestSuite) TestMasterFormCreate() {
 	dummyMasterAnswer := entity.MasterForm{
 		FormName: "Fn 3",
 	}
-	userDummy := repoTest.Save(dummyMasterAnswer)
+	userDummy := repoTest.SaveMasterForm(dummyMasterAnswer)
 	assert.Nil(suite.T(), userDummy)
 }
 
@@ -43,7 +43,7 @@ func (suite *MasterFormRepositoryTestSuite) TestMasterFormUpdate() {
 		ID:       1,
 		FormName: "Fn 3",
 	}
-	userDummy := repoTest.Update(dummyMasterAnswer)
+	userDummy := repoTest.UpdateMasterForm(dummyMasterAnswer)
 	assert.Nil(suite.T(), userDummy)
 }
 
@@ -52,7 +52,7 @@ func (suite *MasterFormRepositoryTestSuite) TestMasterFormDelete() {
 	dummyMasterAnswer := entity.MasterForm{
 		ID: 1,
 	}
-	userDummy := repoTest.Delete(dummyMasterAnswer)
+	userDummy := repoTest.DeleteMasterForm(dummyMasterAnswer)
 	assert.Nil(suite.T(), userDummy)
 }
 

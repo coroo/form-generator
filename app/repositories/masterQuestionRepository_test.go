@@ -33,7 +33,7 @@ func (suite *MasterQuestionRepositoryTestSuite) TestMasterQuestionCreate() {
 	dummyMasterAnswer := entity.MasterQuestion{
 		QuestionText: "Fn 3",
 	}
-	userDummy := repoTest.Save(dummyMasterAnswer)
+	userDummy := repoTest.SaveMasterQuestion(dummyMasterAnswer)
 	assert.Nil(suite.T(), userDummy)
 }
 
@@ -43,7 +43,7 @@ func (suite *MasterQuestionRepositoryTestSuite) TestMasterQuestionUpdate() {
 		ID:           1,
 		QuestionText: "Fn 3",
 	}
-	userDummy := repoTest.Update(dummyMasterAnswer)
+	userDummy := repoTest.UpdateMasterQuestion(dummyMasterAnswer)
 	assert.Nil(suite.T(), userDummy)
 }
 
@@ -52,7 +52,7 @@ func (suite *MasterQuestionRepositoryTestSuite) TestMasterQuestionDelete() {
 	dummyMasterAnswer := entity.MasterQuestion{
 		ID: 1,
 	}
-	userDummy := repoTest.Delete(dummyMasterAnswer)
+	userDummy := repoTest.DeleteMasterQuestion(dummyMasterAnswer)
 	assert.Nil(suite.T(), userDummy)
 }
 
@@ -61,6 +61,14 @@ func (suite *MasterQuestionRepositoryTestSuite) TestGetAllMasterQuestions() {
 	userDummy := repoTest.GetAllMasterQuestions()
 	assert.NotNil(suite.T(), userDummy)
 }
+
+// func (suite *MasterQuestionRepositoryTestSuite) TestGetMasterQuestion() {
+// 	repoTest := NewMasterQuestionRepository()
+// 	suite.ctx.Param("id") = 1
+// 	// ctx := suite.context.WithValue(c.Request.Context(), "GinContextKey", c)
+// 	userDummy := repoTest.GetMasterQuestion(suite.ctx)
+// 	assert.NotNil(suite.T(), userDummy)
+// }
 
 // func (suite *MasterQuestionRepositoryTestSuite) TestFindOneById() {
 // 	repoTest := NewMasterQuestionRepository(suite.db)

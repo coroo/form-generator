@@ -9,9 +9,9 @@ import (
 )
 
 type MasterFormService interface {
-	Save(entity.MasterForm) error
-	Update(entity.MasterForm) error
-	Delete(entity.MasterForm) error
+	SaveMasterForm(entity.MasterForm) error
+	UpdateMasterForm(entity.MasterForm) error
+	DeleteMasterForm(entity.MasterForm) error
 	GetAllMasterForms() []entity.MasterForm
 	GetMasterForm(ctx *gin.Context) []entity.MasterForm
 }
@@ -34,17 +34,17 @@ func (usecases *masterFormService) GetMasterForm(ctx *gin.Context) []entity.Mast
 	return usecases.repositories.GetMasterForm(ctx)
 }
 
-func (usecases *masterFormService) Save(masterForm entity.MasterForm) error {
-	usecases.repositories.Save(masterForm)
+func (usecases *masterFormService) SaveMasterForm(masterForm entity.MasterForm) error {
+	usecases.repositories.SaveMasterForm(masterForm)
 	return nil
 }
 
-func (usecases *masterFormService) Update(masterForm entity.MasterForm) error {
-	usecases.repositories.Update(masterForm)
+func (usecases *masterFormService) UpdateMasterForm(masterForm entity.MasterForm) error {
+	usecases.repositories.UpdateMasterForm(masterForm)
 	return nil
 }
 
-func (usecases *masterFormService) Delete(masterForm entity.MasterForm) error {
-	usecases.repositories.Delete(masterForm)
+func (usecases *masterFormService) DeleteMasterForm(masterForm entity.MasterForm) error {
+	usecases.repositories.DeleteMasterForm(masterForm)
 	return nil
 }

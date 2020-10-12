@@ -9,9 +9,9 @@ import (
 )
 
 type MasterQuestionService interface {
-	Save(entity.MasterQuestion) error
-	Update(entity.MasterQuestion) error
-	Delete(entity.MasterQuestion) error
+	SaveMasterQuestion(entity.MasterQuestion) error
+	UpdateMasterQuestion(entity.MasterQuestion) error
+	DeleteMasterQuestion(entity.MasterQuestion) error
 	GetAllMasterQuestions() []entity.MasterQuestion
 	GetMasterQuestion(ctx *gin.Context) []entity.MasterQuestion
 }
@@ -34,17 +34,17 @@ func (usecases *masterQuestionService) GetMasterQuestion(ctx *gin.Context) []ent
 	return usecases.repositories.GetMasterQuestion(ctx)
 }
 
-func (usecases *masterQuestionService) Save(masterQuestion entity.MasterQuestion) error {
-	usecases.repositories.Save(masterQuestion)
+func (usecases *masterQuestionService) SaveMasterQuestion(masterQuestion entity.MasterQuestion) error {
+	usecases.repositories.SaveMasterQuestion(masterQuestion)
 	return nil
 }
 
-func (usecases *masterQuestionService) Update(masterQuestion entity.MasterQuestion) error {
-	usecases.repositories.Update(masterQuestion)
+func (usecases *masterQuestionService) UpdateMasterQuestion(masterQuestion entity.MasterQuestion) error {
+	usecases.repositories.UpdateMasterQuestion(masterQuestion)
 	return nil
 }
 
-func (usecases *masterQuestionService) Delete(masterQuestion entity.MasterQuestion) error {
-	usecases.repositories.Delete(masterQuestion)
+func (usecases *masterQuestionService) DeleteMasterQuestion(masterQuestion entity.MasterQuestion) error {
+	usecases.repositories.DeleteMasterQuestion(masterQuestion)
 	return nil
 }

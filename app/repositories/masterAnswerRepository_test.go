@@ -35,7 +35,7 @@ func (suite *MasterAnswerRepositoryTestSuite) TestMasterAnswerCreate() {
 		FormAnswer:       "Fn 3",
 		FormScore:        "60",
 	}
-	userDummy := repoTest.Save(dummyMasterAnswer)
+	userDummy := repoTest.SaveMasterAnswer(dummyMasterAnswer)
 	assert.Nil(suite.T(), userDummy)
 }
 
@@ -47,7 +47,7 @@ func (suite *MasterAnswerRepositoryTestSuite) TestMasterAnswerUpdate() {
 		FormAnswer:       "Fn 3",
 		FormScore:        "60",
 	}
-	userDummy := repoTest.Update(dummyMasterAnswer)
+	userDummy := repoTest.UpdateMasterAnswer(dummyMasterAnswer)
 	assert.Nil(suite.T(), userDummy)
 }
 
@@ -56,7 +56,7 @@ func (suite *MasterAnswerRepositoryTestSuite) TestMasterAnswerDelete() {
 	dummyMasterAnswer := entity.MasterAnswer{
 		ID: 1,
 	}
-	userDummy := repoTest.Delete(dummyMasterAnswer)
+	userDummy := repoTest.DeleteMasterAnswer(dummyMasterAnswer)
 	assert.Nil(suite.T(), userDummy)
 }
 

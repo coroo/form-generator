@@ -9,9 +9,9 @@ import (
 )
 
 type MasterAnswerService interface {
-	Save(entity.MasterAnswer) error
-	Update(entity.MasterAnswer) error
-	Delete(entity.MasterAnswer) error
+	SaveMasterAnswer(entity.MasterAnswer) error
+	UpdateMasterAnswer(entity.MasterAnswer) error
+	DeleteMasterAnswer(entity.MasterAnswer) error
 	GetAllMasterAnswers() []entity.MasterAnswer
 	GetMasterAnswer(ctx *gin.Context) []entity.MasterAnswer
 	GetMasterAnswerByQuestion(ctx *gin.Context) []entity.MasterAnswer
@@ -39,17 +39,17 @@ func (usecases *masterAnswerService) GetMasterAnswerByQuestion(ctx *gin.Context)
 	return usecases.repositories.GetMasterAnswerByQuestion(ctx)
 }
 
-func (usecases *masterAnswerService) Save(masterAnswer entity.MasterAnswer) error {
-	usecases.repositories.Save(masterAnswer)
+func (usecases *masterAnswerService) SaveMasterAnswer(masterAnswer entity.MasterAnswer) error {
+	usecases.repositories.SaveMasterAnswer(masterAnswer)
 	return nil
 }
 
-func (usecases *masterAnswerService) Update(masterAnswer entity.MasterAnswer) error {
-	usecases.repositories.Update(masterAnswer)
+func (usecases *masterAnswerService) UpdateMasterAnswer(masterAnswer entity.MasterAnswer) error {
+	usecases.repositories.UpdateMasterAnswer(masterAnswer)
 	return nil
 }
 
-func (usecases *masterAnswerService) Delete(masterAnswer entity.MasterAnswer) error {
-	usecases.repositories.Delete(masterAnswer)
+func (usecases *masterAnswerService) DeleteMasterAnswer(masterAnswer entity.MasterAnswer) error {
+	usecases.repositories.DeleteMasterAnswer(masterAnswer)
 	return nil
 }

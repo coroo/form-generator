@@ -39,7 +39,7 @@ func (c *masterQuestionDeliveries) Save(ctx *gin.Context) error {
 	if err != nil {
 		return err
 	}
-	c.usecases.Save(masterQuestion)
+	c.usecases.SaveMasterQuestion(masterQuestion)
 	return nil
 }
 
@@ -49,7 +49,7 @@ func (c *masterQuestionDeliveries) Update(ctx *gin.Context) error {
 	if err != nil {
 		return err
 	}
-	c.usecases.Update(masterQuestion)
+	c.usecases.UpdateMasterQuestion(masterQuestion)
 	return nil
 }
 
@@ -59,6 +59,6 @@ func (c *masterQuestionDeliveries) Delete(ctx *gin.Context) error {
 	if err != nil {
 		return err
 	}
-	c.usecases.Delete(masterQuestion)
+	c.usecases.DeleteMasterQuestion(masterQuestion)
 	return nil
 }

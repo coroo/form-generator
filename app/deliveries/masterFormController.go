@@ -39,7 +39,7 @@ func (c *masterFormDeliveries) Save(ctx *gin.Context) error {
 	if err != nil {
 		return err
 	}
-	c.usecases.Save(masterForm)
+	c.usecases.SaveMasterForm(masterForm)
 	return nil
 }
 
@@ -49,7 +49,7 @@ func (c *masterFormDeliveries) Update(ctx *gin.Context) error {
 	if err != nil {
 		return err
 	}
-	c.usecases.Update(masterForm)
+	c.usecases.UpdateMasterForm(masterForm)
 	return nil
 }
 
@@ -59,6 +59,6 @@ func (c *masterFormDeliveries) Delete(ctx *gin.Context) error {
 	if err != nil {
 		return err
 	}
-	c.usecases.Delete(masterForm)
+	c.usecases.DeleteMasterForm(masterForm)
 	return nil
 }

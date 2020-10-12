@@ -34,7 +34,7 @@ func (suite *FormGeneratorRepositoryTestSuite) TestFormGeneratorCreate() {
 		MasterQuestionId: 1,
 		MasterFormId:     1,
 	}
-	userDummy := repoTest.Save(dummyFormGenerator)
+	userDummy := repoTest.SaveFormGenerator(dummyFormGenerator)
 	assert.Nil(suite.T(), userDummy)
 }
 
@@ -45,7 +45,7 @@ func (suite *FormGeneratorRepositoryTestSuite) TestFormGeneratorUpdate() {
 		MasterQuestionId: 1,
 		MasterFormId:     1,
 	}
-	userDummy := repoTest.Update(dummyFormGenerator)
+	userDummy := repoTest.UpdateFormGenerator(dummyFormGenerator)
 	assert.Nil(suite.T(), userDummy)
 }
 
@@ -54,7 +54,7 @@ func (suite *FormGeneratorRepositoryTestSuite) TestFormGeneratorDelete() {
 	dummyFormGenerator := entity.FormGenerator{
 		ID: 1,
 	}
-	userDummy := repoTest.Delete(dummyFormGenerator)
+	userDummy := repoTest.DeleteFormGenerator(dummyFormGenerator)
 	assert.Nil(suite.T(), userDummy)
 }
 

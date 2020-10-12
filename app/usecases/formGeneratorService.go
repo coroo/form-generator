@@ -9,9 +9,9 @@ import (
 )
 
 type FormGeneratorService interface {
-	Save(entity.FormGenerator) error
-	Update(entity.FormGenerator) error
-	Delete(entity.FormGenerator) error
+	SaveFormGenerator(entity.FormGenerator) error
+	UpdateFormGenerator(entity.FormGenerator) error
+	DeleteFormGenerator(entity.FormGenerator) error
 	GetAllFormGenerators() []entity.FormGenerator
 	GetFormGenerator(ctx *gin.Context) []entity.FormGenerator
 }
@@ -39,17 +39,17 @@ func (usecases *formGeneratorService) GetFormGenerator(ctx *gin.Context) []entit
 	return usecases.repositories.GetFormGenerator(ctx)
 }
 
-func (usecases *formGeneratorService) Save(formGenerator entity.FormGenerator) error {
-	usecases.repositories.Save(formGenerator)
+func (usecases *formGeneratorService) SaveFormGenerator(formGenerator entity.FormGenerator) error {
+	usecases.repositories.SaveFormGenerator(formGenerator)
 	return nil
 }
 
-func (usecases *formGeneratorService) Update(formGenerator entity.FormGenerator) error {
-	usecases.repositories.Update(formGenerator)
+func (usecases *formGeneratorService) UpdateFormGenerator(formGenerator entity.FormGenerator) error {
+	usecases.repositories.UpdateFormGenerator(formGenerator)
 	return nil
 }
 
-func (usecases *formGeneratorService) Delete(formGenerator entity.FormGenerator) error {
-	usecases.repositories.Delete(formGenerator)
+func (usecases *formGeneratorService) DeleteFormGenerator(formGenerator entity.FormGenerator) error {
+	usecases.repositories.DeleteFormGenerator(formGenerator)
 	return nil
 }

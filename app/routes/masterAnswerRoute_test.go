@@ -37,6 +37,16 @@ var dummyMasterAnswer = []*entity.MasterAnswer{
 	},
 }
 
+type NegativeMasterAnswer struct {
+	NoColumn int `json:"no_column"`
+}
+
+var dummyNegativeMasterAnswer = []*NegativeMasterAnswer{
+	&NegativeMasterAnswer{
+		NoColumn: 1,
+	},
+}
+
 type masterAnswerRouteMock struct {
 	mock.Mock
 }
@@ -79,11 +89,28 @@ func (suite *MasterAnswerRouteTestSuite) TestSaveDelivery() {
 	gin.SetMode(gin.TestMode)
 
 	w := httptest.NewRecorder()
-
 	r := gin.Default()
+
 	r.POST("masterAnswer/create", MasterAnswerCreate)
 
 	jsonValue, _ := json.Marshal(dummyMasterAnswer[0])
+	req, _ := http.NewRequest(http.MethodPost, "/masterAnswer/create", bytes.NewBuffer(jsonValue))
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+
+	r.ServeHTTP(w, req)
+	assert.Equal(suite.T(), w.Code, 200)
+}
+
+func (suite *MasterAnswerRouteTestSuite) TestFailSaveDelivery() {
+	// Switch to test mode so you don't get such noisy output
+	gin.SetMode(gin.TestMode)
+
+	w := httptest.NewRecorder()
+	r := gin.Default()
+
+	r.POST("masterAnswer/create", MasterAnswerCreate)
+
+	jsonValue, _ := json.Marshal(dummyNegativeMasterAnswer[0])
 	req, _ := http.NewRequest(http.MethodPost, "/masterAnswer/create", bytes.NewBuffer(jsonValue))
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 

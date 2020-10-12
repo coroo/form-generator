@@ -39,7 +39,7 @@ func (c *formGeneratorDeliveries) Save(ctx *gin.Context) error {
 	if err != nil {
 		return err
 	}
-	c.usecases.Save(formGenerator)
+	c.usecases.SaveFormGenerator(formGenerator)
 	return nil
 }
 
@@ -49,7 +49,7 @@ func (c *formGeneratorDeliveries) Update(ctx *gin.Context) error {
 	if err != nil {
 		return err
 	}
-	c.usecases.Update(formGenerator)
+	c.usecases.UpdateFormGenerator(formGenerator)
 	return nil
 }
 
@@ -59,6 +59,6 @@ func (c *formGeneratorDeliveries) Delete(ctx *gin.Context) error {
 	if err != nil {
 		return err
 	}
-	c.usecases.Delete(formGenerator)
+	c.usecases.DeleteFormGenerator(formGenerator)
 	return nil
 }

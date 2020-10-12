@@ -13,9 +13,9 @@ import (
 )
 
 type FormGeneratorRepository interface {
-	Save(formGenerator entity.FormGenerator) error
-	Update(formGenerator entity.FormGenerator) error
-	Delete(formGenerator entity.FormGenerator) error
+	SaveFormGenerator(formGenerator entity.FormGenerator) error
+	UpdateFormGenerator(formGenerator entity.FormGenerator) error
+	DeleteFormGenerator(formGenerator entity.FormGenerator) error
 	GetAllFormGenerators() []entity.FormGenerator
 	GetFormGenerator(ctx *gin.Context) []entity.FormGenerator
 	CloseDB()
@@ -43,7 +43,7 @@ func (db *formGeneratorDatabase) CloseDB() {
 	}
 }
 
-func (db *formGeneratorDatabase) Save(formGenerator entity.FormGenerator) error {
+func (db *formGeneratorDatabase) SaveFormGenerator(formGenerator entity.FormGenerator) error {
 	data := &formGenerator
 	data.CreatedAt = time.Now()
 	data.UpdatedAt = time.Now()
@@ -51,14 +51,14 @@ func (db *formGeneratorDatabase) Save(formGenerator entity.FormGenerator) error 
 	return nil
 }
 
-func (db *formGeneratorDatabase) Update(formGenerator entity.FormGenerator) error {
+func (db *formGeneratorDatabase) UpdateFormGenerator(formGenerator entity.FormGenerator) error {
 	data := &formGenerator
 	data.UpdatedAt = time.Now()
 	db.connection.Save(data)
 	return nil
 }
 
-func (db *formGeneratorDatabase) Delete(formGenerator entity.FormGenerator) error {
+func (db *formGeneratorDatabase) DeleteFormGenerator(formGenerator entity.FormGenerator) error {
 	db.connection.Delete(&formGenerator)
 	return nil
 }
