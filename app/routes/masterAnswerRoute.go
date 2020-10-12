@@ -45,10 +45,6 @@ func MasterAnswersIndex(c *gin.Context) {
 // @Router /masterAnswer/byQuestion/{id} [get]
 func MasterAnswersByQuestion(c *gin.Context) {
 	masterAnswer := masterAnswerController.GetMasterAnswerByQuestion(c)
-	// buf := make([]byte, 1024)
-	// num := c.Param("id")
-	// reqBody := string(buf[0:num])
-	// log.Print(num)
 	c.JSON(http.StatusOK, gin.H{"data": masterAnswer})
 }
 
@@ -65,10 +61,6 @@ func MasterAnswersByQuestion(c *gin.Context) {
 // @Router /masterAnswer/detail/{id} [get]
 func MasterAnswersDetail(c *gin.Context) {
 	masterAnswer := masterAnswerController.GetMasterAnswer(c)
-	// buf := make([]byte, 1024)
-	// num := c.Param("id")
-	// reqBody := string(buf[0:num])
-	// log.Print(num)
 	c.JSON(http.StatusOK, gin.H{"data": masterAnswer})
 }
 
