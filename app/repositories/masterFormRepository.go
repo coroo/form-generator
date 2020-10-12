@@ -13,9 +13,9 @@ import (
 )
 
 type MasterFormRepository interface {
-	Save(masterForm entity.MasterForm)
-	Update(masterForm entity.MasterForm)
-	Delete(masterForm entity.MasterForm)
+	Save(masterForm entity.MasterForm) error
+	Update(masterForm entity.MasterForm) error
+	Delete(masterForm entity.MasterForm) error
 	GetAllMasterForms() []entity.MasterForm
 	GetMasterForm(ctx *gin.Context) []entity.MasterForm
 	CloseDB()
@@ -43,21 +43,24 @@ func (db *masterFormDatabase) CloseDB() {
 	}
 }
 
-func (db *masterFormDatabase) Save(masterForm entity.MasterForm) {
+func (db *masterFormDatabase) Save(masterForm entity.MasterForm) error {
 	data := &masterForm
 	data.CreatedAt = time.Now()
 	data.UpdatedAt = time.Now()
 	db.connection.Create(data)
+	return nil
 }
 
-func (db *masterFormDatabase) Update(masterForm entity.MasterForm) {
+func (db *masterFormDatabase) Update(masterForm entity.MasterForm) error {
 	data := &masterForm
 	data.UpdatedAt = time.Now()
 	db.connection.Save(data)
+	return nil
 }
 
-func (db *masterFormDatabase) Delete(masterForm entity.MasterForm) {
+func (db *masterFormDatabase) Delete(masterForm entity.MasterForm) error {
 	db.connection.Delete(&masterForm)
+	return nil
 }
 
 func (db *masterFormDatabase) GetAllMasterForms() []entity.MasterForm {

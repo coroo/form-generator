@@ -13,9 +13,9 @@ import (
 )
 
 type MasterAnswerRepository interface {
-	Save(masterAnswer entity.MasterAnswer)
-	Update(masterAnswer entity.MasterAnswer)
-	Delete(masterAnswer entity.MasterAnswer)
+	Save(masterAnswer entity.MasterAnswer) error
+	Update(masterAnswer entity.MasterAnswer) error
+	Delete(masterAnswer entity.MasterAnswer) error
 	GetAllMasterAnswers() []entity.MasterAnswer
 	GetMasterAnswer(ctx *gin.Context) []entity.MasterAnswer
 	GetMasterAnswerByQuestion(ctx *gin.Context) []entity.MasterAnswer
@@ -44,21 +44,24 @@ func (db *masterAnswerDatabase) CloseDB() {
 	}
 }
 
-func (db *masterAnswerDatabase) Save(masterAnswer entity.MasterAnswer) {
+func (db *masterAnswerDatabase) Save(masterAnswer entity.MasterAnswer) error {
 	data := &masterAnswer
 	data.CreatedAt = time.Now()
 	data.UpdatedAt = time.Now()
 	db.connection.Create(data)
+	return nil
 }
 
-func (db *masterAnswerDatabase) Update(masterAnswer entity.MasterAnswer) {
+func (db *masterAnswerDatabase) Update(masterAnswer entity.MasterAnswer) error {
 	data := &masterAnswer
 	data.UpdatedAt = time.Now()
 	db.connection.Save(data)
+	return nil
 }
 
-func (db *masterAnswerDatabase) Delete(masterAnswer entity.MasterAnswer) {
+func (db *masterAnswerDatabase) Delete(masterAnswer entity.MasterAnswer) error {
 	db.connection.Delete(&masterAnswer)
+	return nil
 }
 
 func (db *masterAnswerDatabase) GetAllMasterAnswers() []entity.MasterAnswer {

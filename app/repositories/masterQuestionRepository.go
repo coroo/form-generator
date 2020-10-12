@@ -13,9 +13,9 @@ import (
 )
 
 type MasterQuestionRepository interface {
-	Save(masterQuestion entity.MasterQuestion)
-	Update(masterQuestion entity.MasterQuestion)
-	Delete(masterQuestion entity.MasterQuestion)
+	Save(masterQuestion entity.MasterQuestion) error
+	Update(masterQuestion entity.MasterQuestion) error
+	Delete(masterQuestion entity.MasterQuestion) error
 	GetAllMasterQuestions() []entity.MasterQuestion
 	GetMasterQuestion(ctx *gin.Context) []entity.MasterQuestion
 	CloseDB()
@@ -43,21 +43,24 @@ func (db *masterQuestionDatabase) CloseDB() {
 	}
 }
 
-func (db *masterQuestionDatabase) Save(masterQuestion entity.MasterQuestion) {
+func (db *masterQuestionDatabase) Save(masterQuestion entity.MasterQuestion) error {
 	data := &masterQuestion
 	data.CreatedAt = time.Now()
 	data.UpdatedAt = time.Now()
 	db.connection.Create(data)
+	return nil
 }
 
-func (db *masterQuestionDatabase) Update(masterQuestion entity.MasterQuestion) {
+func (db *masterQuestionDatabase) Update(masterQuestion entity.MasterQuestion) error {
 	data := &masterQuestion
 	data.UpdatedAt = time.Now()
 	db.connection.Save(data)
+	return nil
 }
 
-func (db *masterQuestionDatabase) Delete(masterQuestion entity.MasterQuestion) {
+func (db *masterQuestionDatabase) Delete(masterQuestion entity.MasterQuestion) error {
 	db.connection.Delete(&masterQuestion)
+	return nil
 }
 
 func (db *masterQuestionDatabase) GetAllMasterQuestions() []entity.MasterQuestion {
