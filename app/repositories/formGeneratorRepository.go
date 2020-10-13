@@ -18,7 +18,6 @@ type FormGeneratorRepository interface {
 	DeleteFormGenerator(formGenerator entity.FormGenerator) error
 	GetAllFormGenerators() []entity.FormGenerator
 	GetFormGenerator(ctx *gin.Context) []entity.FormGenerator
-	CloseDB()
 }
 
 type formGeneratorDatabase struct {
@@ -26,20 +25,10 @@ type formGeneratorDatabase struct {
 }
 
 func NewFormGeneratorRepository() FormGeneratorRepository {
-	db, err := config.ConnectDB()
-	if err != nil {
-		panic("Failed to connect formGeneratorDatabase")
-	}
+	db, _ := config.ConnectDB()
 	db.AutoMigrate(&entity.FormGenerator{})
 	return &formGeneratorDatabase{
 		connection: db,
-	}
-}
-
-func (db *formGeneratorDatabase) CloseDB() {
-	err := db.connection.Close()
-	if err != nil {
-		panic("Failed to close formGeneratorDatabase")
 	}
 }
 

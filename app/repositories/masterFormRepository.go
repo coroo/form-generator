@@ -18,7 +18,6 @@ type MasterFormRepository interface {
 	DeleteMasterForm(masterForm entity.MasterForm) error
 	GetAllMasterForms() []entity.MasterForm
 	GetMasterForm(ctx *gin.Context) []entity.MasterForm
-	CloseDB()
 }
 
 type masterFormDatabase struct {
@@ -26,20 +25,10 @@ type masterFormDatabase struct {
 }
 
 func NewMasterFormRepository() MasterFormRepository {
-	db, err := config.ConnectDB()
-	if err != nil {
-		panic("Failed to connect masterFormDatabase")
-	}
+	db, _ := config.ConnectDB()
 	db.AutoMigrate(&entity.MasterForm{})
 	return &masterFormDatabase{
 		connection: db,
-	}
-}
-
-func (db *masterFormDatabase) CloseDB() {
-	err := db.connection.Close()
-	if err != nil {
-		panic("Failed to close masterFormDatabase")
 	}
 }
 
