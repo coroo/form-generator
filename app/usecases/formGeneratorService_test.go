@@ -1,6 +1,7 @@
 package usecases
 
 import (
+	"net/http/httptest"
 	"testing"
 	"time"
 
@@ -61,11 +62,11 @@ func (r *repoMockFormGenerator) GetAllFormGenerators() []entity.FormGenerator {
 	return dummyFormGenerator
 }
 
-func (r *repoMockFormGenerator) CloseDB() {
+func (r *repoMockFormGenerator) GetFormGenerator(ctx *gin.Context) []entity.FormGenerator {
+	return dummyFormGenerator
 }
 
-func (r *repoMockFormGenerator) GetFormGenerator(ctx *gin.Context) []entity.FormGenerator {
-	return nil
+func (r *repoMockFormGenerator) CloseDB() {
 }
 
 type FormGeneratorDeliveryTestSuite struct {
@@ -113,12 +114,16 @@ func (suite *FormGeneratorDeliveryTestSuite) TestGetAllFormGenerators() {
 	assert.Equal(suite.T(), dummyFormGenerator, dummyUser)
 }
 
-// func (suite *FormGeneratorDeliveryTestSuite) TestGetFormGenerator() {
-// 	suite.repositoryTest.(*repoMockFormGenerator).On("FindOneById", dummyFormGenerator[0].ID).Return(dummyFormGenerator[0], nil)
-// 	useCaseTest := NewFormGenerator(suite.repositoryTest)
-// 	dummyUser := useCaseTest.GetFormGenerator(dummyFormGenerator[0].ID)
-// 	assert.Equal(suite.T(), dummyFormGenerator[0].ID, dummyUser.ID)
-// }
+func (suite *FormGeneratorDeliveryTestSuite) TestGetFormGenerator() {
+	suite.repositoryTest.(*repoMockFormGenerator).On("GetFormGenerator", dummyFormGenerator[0].ID).Return(dummyFormGenerator[0], nil)
+	useCaseTest := NewFormGenerator(suite.repositoryTest)
+
+	c, _ := gin.CreateTestContext(httptest.NewRecorder())
+	c.Params = gin.Params{gin.Param{Key: "id", Value: "1"}}
+	dummyUser := useCaseTest.GetFormGenerator(c)
+	assert.NotNil(suite.T(), dummyUser[0])
+	assert.Equal(suite.T(), dummyFormGenerator[0], dummyUser[0])
+}
 
 func TestFormGeneratorDeliveryTestSuite(t *testing.T) {
 	suite.Run(t, new(FormGeneratorDeliveryTestSuite))

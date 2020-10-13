@@ -1,6 +1,7 @@
 package usecases
 
 import (
+	"net/http/httptest"
 	"testing"
 	"time"
 
@@ -63,15 +64,15 @@ func (r *repoMockMasterAnswer) GetAllMasterAnswers() []entity.MasterAnswer {
 	return dummyMasterAnswer
 }
 
-func (r *repoMockMasterAnswer) CloseDB() {
-}
-
 func (r *repoMockMasterAnswer) GetMasterAnswer(ctx *gin.Context) []entity.MasterAnswer {
-	return nil
+	return dummyMasterAnswer
 }
 
 func (r *repoMockMasterAnswer) GetMasterAnswerByQuestion(ctx *gin.Context) []entity.MasterAnswer {
-	return nil
+	return dummyMasterAnswer
+}
+
+func (r *repoMockMasterAnswer) CloseDB() {
 }
 
 type MasterAnswerDeliveryTestSuite struct {
@@ -119,12 +120,27 @@ func (suite *MasterAnswerDeliveryTestSuite) TestGetAllMasterAnswers() {
 	assert.Equal(suite.T(), dummyMasterAnswer, dummyUser)
 }
 
-// func (suite *MasterAnswerDeliveryTestSuite) TestGetMasterAnswer() {
-// 	suite.repositoryTest.(*repoMockMasterAnswer).On("FindOneById", dummyMasterAnswer[0].ID).Return(dummyMasterAnswer[0], nil)
-// 	useCaseTest := NewMasterAnswer(suite.repositoryTest)
-// 	dummyUser := useCaseTest.GetMasterAnswer(dummyMasterAnswer[0].ID)
-// 	assert.Equal(suite.T(), dummyMasterAnswer[0].ID, dummyUser.ID)
-// }
+func (suite *MasterAnswerDeliveryTestSuite) TestGetMasterAnswer() {
+	suite.repositoryTest.(*repoMockMasterAnswer).On("GetMasterAnswer", dummyMasterAnswer[0].ID).Return(dummyMasterAnswer[0], nil)
+	useCaseTest := NewMasterAnswer(suite.repositoryTest)
+
+	c, _ := gin.CreateTestContext(httptest.NewRecorder())
+	c.Params = gin.Params{gin.Param{Key: "id", Value: "1"}}
+	dummyUser := useCaseTest.GetMasterAnswer(c)
+	assert.NotNil(suite.T(), dummyUser[0])
+	assert.Equal(suite.T(), dummyMasterAnswer[0], dummyUser[0])
+}
+
+func (suite *MasterAnswerDeliveryTestSuite) TestGetMasterAnswerByQuestion() {
+	suite.repositoryTest.(*repoMockMasterAnswer).On("GetMasterAnswerByQuestion", dummyMasterAnswer[0].ID).Return(dummyMasterAnswer[0], nil)
+	useCaseTest := NewMasterAnswer(suite.repositoryTest)
+
+	c, _ := gin.CreateTestContext(httptest.NewRecorder())
+	c.Params = gin.Params{gin.Param{Key: "id", Value: "1"}}
+	dummyUser := useCaseTest.GetMasterAnswerByQuestion(c)
+	assert.NotNil(suite.T(), dummyUser[0])
+	assert.Equal(suite.T(), dummyMasterAnswer[0], dummyUser[0])
+}
 
 func TestMasterAnswerDeliveryTestSuite(t *testing.T) {
 	suite.Run(t, new(MasterAnswerDeliveryTestSuite))

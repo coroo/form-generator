@@ -1,6 +1,7 @@
 package usecases
 
 import (
+	"net/http/httptest"
 	"testing"
 	"time"
 
@@ -59,11 +60,11 @@ func (r *repoMockMasterForm) GetAllMasterForms() []entity.MasterForm {
 	return dummyMasterForm
 }
 
-func (r *repoMockMasterForm) CloseDB() {
+func (r *repoMockMasterForm) GetMasterForm(ctx *gin.Context) []entity.MasterForm {
+	return dummyMasterForm
 }
 
-func (r *repoMockMasterForm) GetMasterForm(ctx *gin.Context) []entity.MasterForm {
-	return nil
+func (r *repoMockMasterForm) CloseDB() {
 }
 
 type MasterFormDeliveryTestSuite struct {
@@ -111,12 +112,17 @@ func (suite *MasterFormDeliveryTestSuite) TestGetAllMasterForms() {
 	assert.Equal(suite.T(), dummyMasterForm, dummyUser)
 }
 
-// func (suite *MasterFormDeliveryTestSuite) TestGetMasterForm() {
-// 	suite.repositoryTest.(*repoMockMasterForm).On("FindOneById", dummyMasterForm[0].ID).Return(dummyMasterForm[0], nil)
-// 	useCaseTest := NewMasterForm(suite.repositoryTest)
-// 	dummyUser := useCaseTest.GetMasterForm(dummyMasterForm[0].ID)
-// 	assert.Equal(suite.T(), dummyMasterForm[0].ID, dummyUser.ID)
-// }
+func (suite *MasterFormDeliveryTestSuite) TestGetMasterForm() {
+	suite.repositoryTest.(*repoMockMasterForm).On("GetMasterForm", dummyMasterForm[0].ID).Return(dummyMasterForm[0], nil)
+	useCaseTest := NewMasterForm(suite.repositoryTest)
+
+	gin.SetMode(gin.TestMode)
+	c, _ := gin.CreateTestContext(httptest.NewRecorder())
+	c.Params = gin.Params{gin.Param{Key: "id", Value: "1"}}
+	dummyUser := useCaseTest.GetMasterForm(c)
+	assert.NotNil(suite.T(), dummyUser[0])
+	assert.Equal(suite.T(), dummyMasterForm[0], dummyUser[0])
+}
 
 func TestMasterFormDeliveryTestSuite(t *testing.T) {
 	suite.Run(t, new(MasterFormDeliveryTestSuite))

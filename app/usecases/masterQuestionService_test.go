@@ -1,6 +1,7 @@
 package usecases
 
 import (
+	"net/http/httptest"
 	"testing"
 	"time"
 
@@ -59,11 +60,11 @@ func (r *repoMockMasterQuestion) GetAllMasterQuestions() []entity.MasterQuestion
 	return dummyMasterQuestion
 }
 
-func (r *repoMockMasterQuestion) CloseDB() {
+func (r *repoMockMasterQuestion) GetMasterQuestion(ctx *gin.Context) []entity.MasterQuestion {
+	return dummyMasterQuestion
 }
 
-func (r *repoMockMasterQuestion) GetMasterQuestion(ctx *gin.Context) []entity.MasterQuestion {
-	return nil
+func (r *repoMockMasterQuestion) CloseDB() {
 }
 
 type MasterQuestionDeliveryTestSuite struct {
@@ -111,12 +112,16 @@ func (suite *MasterQuestionDeliveryTestSuite) TestGetAllMasterQuestions() {
 	assert.Equal(suite.T(), dummyMasterQuestion, dummyUser)
 }
 
-// func (suite *MasterQuestionDeliveryTestSuite) TestGetMasterQuestion() {
-// 	suite.repositoryTest.(*repoMockMasterQuestion).On("FindOneById", dummyMasterQuestion[0].ID).Return(dummyMasterQuestion[0], nil)
-// 	useCaseTest := NewMasterQuestion(suite.repositoryTest)
-// 	dummyUser := useCaseTest.GetMasterQuestion(dummyMasterQuestion[0].ID)
-// 	assert.Equal(suite.T(), dummyMasterQuestion[0].ID, dummyUser.ID)
-// }
+func (suite *MasterQuestionDeliveryTestSuite) TestGetMasterQuestion() {
+	suite.repositoryTest.(*repoMockMasterQuestion).On("GetMasterQuestion", dummyMasterQuestion[0].ID).Return(dummyMasterQuestion[0], nil)
+	useCaseTest := NewMasterQuestion(suite.repositoryTest)
+
+	c, _ := gin.CreateTestContext(httptest.NewRecorder())
+	c.Params = gin.Params{gin.Param{Key: "id", Value: "1"}}
+	dummyUser := useCaseTest.GetMasterQuestion(c)
+	assert.NotNil(suite.T(), dummyUser[0])
+	assert.Equal(suite.T(), dummyMasterQuestion[0], dummyUser[0])
+}
 
 func TestMasterQuestionDeliveryTestSuite(t *testing.T) {
 	suite.Run(t, new(MasterQuestionDeliveryTestSuite))
