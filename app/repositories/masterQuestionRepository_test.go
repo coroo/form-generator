@@ -1,6 +1,7 @@
 package repositories
 
 import (
+	"net/http/httptest"
 	"testing"
 
 	entity "github.com/coroo/form-generator/app/entity"
@@ -62,34 +63,23 @@ func (suite *MasterQuestionRepositoryTestSuite) TestGetAllMasterQuestions() {
 	assert.NotNil(suite.T(), userDummy)
 }
 
-// func (suite *MasterQuestionRepositoryTestSuite) TestGetMasterQuestion() {
-// 	repoTest := NewMasterQuestionRepository()
-// 	suite.ctx.Param("id") = 1
-// 	// ctx := suite.context.WithValue(c.Request.Context(), "GinContextKey", c)
-// 	userDummy := repoTest.GetMasterQuestion(suite.ctx)
-// 	assert.NotNil(suite.T(), userDummy)
-// }
+type ContextMock struct {
+	JSONCalled bool
+}
 
-// func (suite *MasterQuestionRepositoryTestSuite) TestFindOneById() {
-// 	repoTest := NewMasterQuestionRepository(suite.db)
-// 	userDummy, err := repoTest.FindOneById("1")
-// 	assert.Nil(suite.T(), err)
-// 	assert.Equal(suite.T(), "1", userDummy.Id)
-// }
+func (c *ContextMock) JSON(code int, obj interface{}) {
+	c.JSONCalled = true
+}
 
-// func (suite *MasterQuestionRepositoryTestSuite) TestCreate() {
-// 	repoTest := NewMasterQuestionRepository(suite.db)
-// 	dummyUser := &models.User{
-// 		FirstName: "Fn 3",
-// 		LastName:  "Ln 3",
-// 		IsActive:  "A",
-// 	}
-// 	err := repoTest.Create(dummyUser)
-// 	assert.Nil(suite.T(), err)
-// 	userDummy, err := repoTest.FindOneById(dummyUser.Id)
-// 	assert.Nil(suite.T(), err)
-// 	assert.Equal(suite.T(), "Fn 3", userDummy.FirstName)
-// }
+func (suite *MasterQuestionRepositoryTestSuite) TestGetMasterQuestion() {
+	c, _ := gin.CreateTestContext(httptest.NewRecorder())
+	c.Params = gin.Params{gin.Param{Key: "id", Value: "1"}}
+
+	repoTest := NewMasterQuestionRepository()
+	userDummy := repoTest.GetMasterQuestion(c)
+	assert.NotNil(suite.T(), userDummy)
+}
+
 func TestMasterQuestionRepositoryTestSuite(t *testing.T) {
 	suite.Run(t, new(MasterQuestionRepositoryTestSuite))
 }

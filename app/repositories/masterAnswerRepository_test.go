@@ -1,6 +1,7 @@
 package repositories
 
 import (
+	"net/http/httptest"
 	"testing"
 
 	entity "github.com/coroo/form-generator/app/entity"
@@ -63,6 +64,24 @@ func (suite *MasterAnswerRepositoryTestSuite) TestMasterAnswerDelete() {
 func (suite *MasterAnswerRepositoryTestSuite) TestGetAllMasterAnswers() {
 	repoTest := NewMasterAnswerRepository()
 	userDummy := repoTest.GetAllMasterAnswers()
+	assert.NotNil(suite.T(), userDummy)
+}
+
+func (suite *MasterAnswerRepositoryTestSuite) TestGetMasterAnswer() {
+	c, _ := gin.CreateTestContext(httptest.NewRecorder())
+	c.Params = gin.Params{gin.Param{Key: "id", Value: "1"}}
+
+	repoTest := NewMasterAnswerRepository()
+	userDummy := repoTest.GetMasterAnswer(c)
+	assert.NotNil(suite.T(), userDummy)
+}
+
+func (suite *MasterAnswerRepositoryTestSuite) TestGetMasterAnswerByQuestion() {
+	c, _ := gin.CreateTestContext(httptest.NewRecorder())
+	c.Params = gin.Params{gin.Param{Key: "id", Value: "1"}}
+
+	repoTest := NewMasterAnswerRepository()
+	userDummy := repoTest.GetMasterAnswerByQuestion(c)
 	assert.NotNil(suite.T(), userDummy)
 }
 
