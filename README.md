@@ -4,7 +4,7 @@
 > Please read [how the app work section](#mag-how-the-app-works-) for overall flow.
 
 ### App Information
-This app use [gin](https://github.com/gin-gonic/gin) as a framework and [gorm](https://gorm.io/index.html) as an ORM.
+This app use [gin](https://github.com/gin-gonic/gin) as a framework, [gorm](https://gorm.io/index.html) as an ORM and [go-swagger](https://github.com/go-swagger/go-swagger) as API documentation.
 
 # :page_facing_up: Installation
 
