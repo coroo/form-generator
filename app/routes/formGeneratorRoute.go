@@ -1,7 +1,6 @@
 package routes
 
 import (
-	"fmt"
 	"net/http"
 
 	deliveries "github.com/coroo/form-generator/app/deliveries"
@@ -64,7 +63,6 @@ func FormGeneratorsDetail(c *gin.Context) {
 // @Router /formGenerator/create [post]
 func FormGeneratorCreate(c *gin.Context) {
 	var formGeneratorEntity entity.FormGenerator
-	fmt.Println(c.Request.Body)
 	c.ShouldBindJSON(&formGeneratorEntity)
 	formGenerator := formGeneratorController.Save(formGeneratorEntity)
 	c.JSON(http.StatusOK, formGenerator)
@@ -84,7 +82,6 @@ func FormGeneratorCreate(c *gin.Context) {
 // @Router /formGenerator/update [put]
 func FormGeneratorUpdate(c *gin.Context) {
 	var formGeneratorEntity entity.FormGenerator
-	fmt.Println(c.Request.Body)
 	c.ShouldBindJSON(&formGeneratorEntity)
 	formGenerator := formGeneratorController.Update(formGeneratorEntity)
 	c.JSON(http.StatusOK, formGenerator)
@@ -104,7 +101,6 @@ func FormGeneratorUpdate(c *gin.Context) {
 // @Router /formGenerator/delete [delete]
 func FormGeneratorDelete(c *gin.Context) {
 	var formGeneratorEntity entity.FormGenerator
-	fmt.Println(c.Request.Body)
 	c.ShouldBindJSON(&formGeneratorEntity)
 	formGenerator := formGeneratorController.Delete(formGeneratorEntity)
 	c.JSON(http.StatusOK, formGenerator)

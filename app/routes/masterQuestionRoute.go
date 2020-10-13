@@ -1,7 +1,6 @@
 package routes
 
 import (
-	"fmt"
 	"net/http"
 
 	deliveries "github.com/coroo/form-generator/app/deliveries"
@@ -68,7 +67,6 @@ func MasterQuestionsDetail(c *gin.Context) {
 // @Router /masterQuestion/create [post]
 func MasterQuestionCreate(c *gin.Context) {
 	var masterQuestionEntity entity.MasterQuestion
-	fmt.Println(c.Request.Body)
 	c.ShouldBindJSON(&masterQuestionEntity)
 	masterQuestion := masterQuestionController.Save(masterQuestionEntity)
 	c.JSON(http.StatusOK, masterQuestion)
@@ -88,7 +86,6 @@ func MasterQuestionCreate(c *gin.Context) {
 // @Router /masterQuestion/update [put]
 func MasterQuestionUpdate(c *gin.Context) {
 	var masterQuestionEntity entity.MasterQuestion
-	fmt.Println(c.Request.Body)
 	c.ShouldBindJSON(&masterQuestionEntity)
 	masterQuestion := masterQuestionController.Update(masterQuestionEntity)
 	c.JSON(http.StatusOK, masterQuestion)
@@ -108,7 +105,6 @@ func MasterQuestionUpdate(c *gin.Context) {
 // @Router /masterQuestion/delete [delete]
 func MasterQuestionDelete(c *gin.Context) {
 	var masterQuestionEntity entity.MasterQuestion
-	fmt.Println(c.Request.Body)
 	c.ShouldBindJSON(&masterQuestionEntity)
 	masterQuestion := masterQuestionController.Delete(masterQuestionEntity)
 	c.JSON(http.StatusOK, masterQuestion)
