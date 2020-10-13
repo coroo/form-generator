@@ -83,11 +83,7 @@ func MasterAnswerCreate(c *gin.Context) {
 	fmt.Println(c.Request.Body)
 	c.ShouldBindJSON(&masterAnswerEntity)
 	masterAnswer := masterAnswerController.Save(masterAnswerEntity)
-	if masterAnswer != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": masterAnswer.Error()})
-	} else {
-		c.JSON(http.StatusOK, masterAnswer)
-	}
+	c.JSON(http.StatusOK, masterAnswer)
 }
 
 // UpdateMasterAnswers godoc
@@ -107,11 +103,7 @@ func MasterAnswerUpdate(c *gin.Context) {
 	fmt.Println(c.Request.Body)
 	c.ShouldBindJSON(&masterAnswerEntity)
 	masterAnswer := masterAnswerController.Update(masterAnswerEntity)
-	if masterAnswer != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": masterAnswer.Error()})
-	} else {
-		c.JSON(http.StatusOK, masterAnswer)
-	}
+	c.JSON(http.StatusOK, masterAnswer)
 }
 
 // DeleteMasterAnswers godoc
@@ -131,9 +123,5 @@ func MasterAnswerDelete(c *gin.Context) {
 	fmt.Println(c.Request.Body)
 	c.ShouldBindJSON(&masterAnswerEntity)
 	masterAnswer := masterAnswerController.Delete(masterAnswerEntity)
-	if masterAnswer != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": masterAnswer.Error()})
-	} else {
-		c.JSON(http.StatusOK, masterAnswer)
-	}
+	c.JSON(http.StatusOK, masterAnswer)
 }

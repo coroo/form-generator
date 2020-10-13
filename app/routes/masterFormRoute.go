@@ -71,11 +71,7 @@ func MasterFormCreate(c *gin.Context) {
 	fmt.Println(c.Request.Body)
 	c.ShouldBindJSON(&masterFormEntity)
 	masterForm := masterFormController.Save(masterFormEntity)
-	if masterForm != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": masterForm.Error()})
-	} else {
-		c.JSON(http.StatusOK, masterForm)
-	}
+	c.JSON(http.StatusOK, masterForm)
 }
 
 // UpdateMasterForms godoc
@@ -95,11 +91,7 @@ func MasterFormUpdate(c *gin.Context) {
 	fmt.Println(c.Request.Body)
 	c.ShouldBindJSON(&masterFormEntity)
 	masterForm := masterFormController.Update(masterFormEntity)
-	if masterForm != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": masterForm.Error()})
-	} else {
-		c.JSON(http.StatusOK, masterForm)
-	}
+	c.JSON(http.StatusOK, masterForm)
 }
 
 // DeleteMasterForms godoc
@@ -119,9 +111,5 @@ func MasterFormDelete(c *gin.Context) {
 	fmt.Println(c.Request.Body)
 	c.ShouldBindJSON(&masterFormEntity)
 	masterForm := masterFormController.Delete(masterFormEntity)
-	if masterForm != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": masterForm.Error()})
-	} else {
-		c.JSON(http.StatusOK, masterForm)
-	}
+	c.JSON(http.StatusOK, masterForm)
 }

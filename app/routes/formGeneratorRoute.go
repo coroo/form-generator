@@ -47,10 +47,6 @@ func FormGeneratorsIndex(c *gin.Context) {
 // @Router /formGenerator/detail/{id} [get]
 func FormGeneratorsDetail(c *gin.Context) {
 	formGenerator := formGeneratorController.GetFormGenerator(c)
-	// buf := make([]byte, 1024)
-	// num := c.Param("id")
-	// reqBody := string(buf[0:num])
-	// log.Print(num)
 	c.JSON(http.StatusOK, gin.H{"data": formGenerator})
 }
 
@@ -71,11 +67,7 @@ func FormGeneratorCreate(c *gin.Context) {
 	fmt.Println(c.Request.Body)
 	c.ShouldBindJSON(&formGeneratorEntity)
 	formGenerator := formGeneratorController.Save(formGeneratorEntity)
-	if formGenerator != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": formGenerator.Error()})
-	} else {
-		c.JSON(http.StatusOK, formGenerator)
-	}
+	c.JSON(http.StatusOK, formGenerator)
 }
 
 // UpdateFormGenerators godoc
@@ -95,11 +87,7 @@ func FormGeneratorUpdate(c *gin.Context) {
 	fmt.Println(c.Request.Body)
 	c.ShouldBindJSON(&formGeneratorEntity)
 	formGenerator := formGeneratorController.Update(formGeneratorEntity)
-	if formGenerator != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": formGenerator.Error()})
-	} else {
-		c.JSON(http.StatusOK, formGenerator)
-	}
+	c.JSON(http.StatusOK, formGenerator)
 }
 
 // DeleteFormGenerators godoc
@@ -119,9 +107,5 @@ func FormGeneratorDelete(c *gin.Context) {
 	fmt.Println(c.Request.Body)
 	c.ShouldBindJSON(&formGeneratorEntity)
 	formGenerator := formGeneratorController.Delete(formGeneratorEntity)
-	if formGenerator != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": formGenerator.Error()})
-	} else {
-		c.JSON(http.StatusOK, formGenerator)
-	}
+	c.JSON(http.StatusOK, formGenerator)
 }
