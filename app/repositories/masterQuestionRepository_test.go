@@ -63,14 +63,6 @@ func (suite *MasterQuestionRepositoryTestSuite) TestGetAllMasterQuestions() {
 	assert.NotNil(suite.T(), userDummy)
 }
 
-type ContextMock struct {
-	JSONCalled bool
-}
-
-func (c *ContextMock) JSON(code int, obj interface{}) {
-	c.JSONCalled = true
-}
-
 func (suite *MasterQuestionRepositoryTestSuite) TestGetMasterQuestion() {
 	c, _ := gin.CreateTestContext(httptest.NewRecorder())
 	c.Params = gin.Params{gin.Param{Key: "id", Value: "1"}}
