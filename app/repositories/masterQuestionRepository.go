@@ -18,7 +18,6 @@ type MasterQuestionRepository interface {
 	DeleteMasterQuestion(masterQuestion entity.MasterQuestion) error
 	GetAllMasterQuestions() []entity.MasterQuestion
 	GetMasterQuestion(ctx *gin.Context) []entity.MasterQuestion
-	CloseDB()
 }
 
 type masterQuestionDatabase struct {
@@ -26,20 +25,10 @@ type masterQuestionDatabase struct {
 }
 
 func NewMasterQuestionRepository() MasterQuestionRepository {
-	db, err := config.ConnectDB()
-	if err != nil {
-		panic("Failed to connect masterQuestionDatabase")
-	}
+	db, _ := config.ConnectDB()
 	db.AutoMigrate(&entity.MasterQuestion{})
 	return &masterQuestionDatabase{
 		connection: db,
-	}
-}
-
-func (db *masterQuestionDatabase) CloseDB() {
-	err := db.connection.Close()
-	if err != nil {
-		panic("Failed to close masterQuestionDatabase")
 	}
 }
 

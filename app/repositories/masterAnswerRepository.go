@@ -19,7 +19,6 @@ type MasterAnswerRepository interface {
 	GetAllMasterAnswers() []entity.MasterAnswer
 	GetMasterAnswer(ctx *gin.Context) []entity.MasterAnswer
 	GetMasterAnswerByQuestion(ctx *gin.Context) []entity.MasterAnswer
-	CloseDB()
 }
 
 type masterAnswerDatabase struct {
@@ -27,20 +26,10 @@ type masterAnswerDatabase struct {
 }
 
 func NewMasterAnswerRepository() MasterAnswerRepository {
-	db, err := config.ConnectDB()
-	if err != nil {
-		panic("Failed to connect masterAnswerDatabase")
-	}
+	db, _ := config.ConnectDB()
 	db.AutoMigrate(&entity.MasterAnswer{})
 	return &masterAnswerDatabase{
 		connection: db,
-	}
-}
-
-func (db *masterAnswerDatabase) CloseDB() {
-	err := db.connection.Close()
-	if err != nil {
-		panic("Failed to close masterAnswerDatabase")
 	}
 }
 
