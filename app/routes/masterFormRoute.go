@@ -1,9 +1,11 @@
 package routes
 
 import (
+	"fmt"
 	"net/http"
 
 	deliveries "github.com/coroo/form-generator/app/deliveries"
+	"github.com/coroo/form-generator/app/entity"
 	repositories "github.com/coroo/form-generator/app/repositories"
 	usecases "github.com/coroo/form-generator/app/usecases"
 
@@ -65,7 +67,10 @@ func MasterFormsDetail(c *gin.Context) {
 // @Failure 401 {object} dto.Response
 // @Router /masterForm/create [post]
 func MasterFormCreate(c *gin.Context) {
-	masterForm := masterFormController.Save(c)
+	var masterFormEntity entity.MasterForm
+	fmt.Println(c.Request.Body)
+	c.ShouldBindJSON(&masterFormEntity)
+	masterForm := masterFormController.Save(masterFormEntity)
 	if masterForm != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": masterForm.Error()})
 	} else {
@@ -86,7 +91,10 @@ func MasterFormCreate(c *gin.Context) {
 // @Failure 401 {object} dto.Response
 // @Router /masterForm/update [put]
 func MasterFormUpdate(c *gin.Context) {
-	masterForm := masterFormController.Update(c)
+	var masterFormEntity entity.MasterForm
+	fmt.Println(c.Request.Body)
+	c.ShouldBindJSON(&masterFormEntity)
+	masterForm := masterFormController.Update(masterFormEntity)
 	if masterForm != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": masterForm.Error()})
 	} else {
@@ -107,7 +115,10 @@ func MasterFormUpdate(c *gin.Context) {
 // @Failure 401 {object} dto.Response
 // @Router /masterForm/delete [delete]
 func MasterFormDelete(c *gin.Context) {
-	masterForm := masterFormController.Delete(c)
+	var masterFormEntity entity.MasterForm
+	fmt.Println(c.Request.Body)
+	c.ShouldBindJSON(&masterFormEntity)
+	masterForm := masterFormController.Delete(masterFormEntity)
 	if masterForm != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": masterForm.Error()})
 	} else {

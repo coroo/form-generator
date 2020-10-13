@@ -37,15 +37,15 @@ type masterFormRouteMock struct {
 	mock.Mock
 }
 
-func (s *masterFormRouteMock) Save(ctx *gin.Context) error {
+func (s *masterFormRouteMock) Save(masterForm entity.MasterForm) error {
 	return nil
 }
 
-func (s *masterFormRouteMock) Update(ctx *gin.Context) error {
+func (s *masterFormRouteMock) Update(masterForm entity.MasterForm) error {
 	return nil
 }
 
-func (s *masterFormRouteMock) Delete(ctx *gin.Context) error {
+func (s *masterFormRouteMock) Delete(masterForm entity.MasterForm) error {
 	return nil
 }
 

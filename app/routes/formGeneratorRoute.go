@@ -1,9 +1,11 @@
 package routes
 
 import (
+	"fmt"
 	"net/http"
 
 	deliveries "github.com/coroo/form-generator/app/deliveries"
+	"github.com/coroo/form-generator/app/entity"
 	repositories "github.com/coroo/form-generator/app/repositories"
 	usecases "github.com/coroo/form-generator/app/usecases"
 
@@ -65,7 +67,10 @@ func FormGeneratorsDetail(c *gin.Context) {
 // @Failure 401 {object} dto.Response
 // @Router /formGenerator/create [post]
 func FormGeneratorCreate(c *gin.Context) {
-	formGenerator := formGeneratorController.Save(c)
+	var formGeneratorEntity entity.FormGenerator
+	fmt.Println(c.Request.Body)
+	c.ShouldBindJSON(&formGeneratorEntity)
+	formGenerator := formGeneratorController.Save(formGeneratorEntity)
 	if formGenerator != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": formGenerator.Error()})
 	} else {
@@ -86,7 +91,10 @@ func FormGeneratorCreate(c *gin.Context) {
 // @Failure 401 {object} dto.Response
 // @Router /formGenerator/update [put]
 func FormGeneratorUpdate(c *gin.Context) {
-	formGenerator := formGeneratorController.Update(c)
+	var formGeneratorEntity entity.FormGenerator
+	fmt.Println(c.Request.Body)
+	c.ShouldBindJSON(&formGeneratorEntity)
+	formGenerator := formGeneratorController.Update(formGeneratorEntity)
 	if formGenerator != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": formGenerator.Error()})
 	} else {
@@ -107,7 +115,10 @@ func FormGeneratorUpdate(c *gin.Context) {
 // @Failure 401 {object} dto.Response
 // @Router /formGenerator/delete [delete]
 func FormGeneratorDelete(c *gin.Context) {
-	formGenerator := formGeneratorController.Delete(c)
+	var formGeneratorEntity entity.FormGenerator
+	fmt.Println(c.Request.Body)
+	c.ShouldBindJSON(&formGeneratorEntity)
+	formGenerator := formGeneratorController.Delete(formGeneratorEntity)
 	if formGenerator != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": formGenerator.Error()})
 	} else {

@@ -1,9 +1,11 @@
 package routes
 
 import (
+	"fmt"
 	"net/http"
 
 	deliveries "github.com/coroo/form-generator/app/deliveries"
+	"github.com/coroo/form-generator/app/entity"
 	repositories "github.com/coroo/form-generator/app/repositories"
 	usecases "github.com/coroo/form-generator/app/usecases"
 
@@ -77,7 +79,10 @@ func MasterAnswersDetail(c *gin.Context) {
 // @Failure 401 {object} dto.Response
 // @Router /masterAnswer/create [post]
 func MasterAnswerCreate(c *gin.Context) {
-	masterAnswer := masterAnswerController.Save(c)
+	var masterAnswerEntity entity.MasterAnswer
+	fmt.Println(c.Request.Body)
+	c.ShouldBindJSON(&masterAnswerEntity)
+	masterAnswer := masterAnswerController.Save(masterAnswerEntity)
 	if masterAnswer != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": masterAnswer.Error()})
 	} else {
@@ -98,7 +103,10 @@ func MasterAnswerCreate(c *gin.Context) {
 // @Failure 401 {object} dto.Response
 // @Router /masterAnswer/update [put]
 func MasterAnswerUpdate(c *gin.Context) {
-	masterAnswer := masterAnswerController.Update(c)
+	var masterAnswerEntity entity.MasterAnswer
+	fmt.Println(c.Request.Body)
+	c.ShouldBindJSON(&masterAnswerEntity)
+	masterAnswer := masterAnswerController.Update(masterAnswerEntity)
 	if masterAnswer != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": masterAnswer.Error()})
 	} else {
@@ -119,7 +127,10 @@ func MasterAnswerUpdate(c *gin.Context) {
 // @Failure 401 {object} dto.Response
 // @Router /masterAnswer/delete [delete]
 func MasterAnswerDelete(c *gin.Context) {
-	masterAnswer := masterAnswerController.Delete(c)
+	var masterAnswerEntity entity.MasterAnswer
+	fmt.Println(c.Request.Body)
+	c.ShouldBindJSON(&masterAnswerEntity)
+	masterAnswer := masterAnswerController.Delete(masterAnswerEntity)
 	if masterAnswer != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": masterAnswer.Error()})
 	} else {

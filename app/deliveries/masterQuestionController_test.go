@@ -1,24 +1,26 @@
 package deliveries
 
 import (
+	"net/http/httptest"
 	"testing"
 	"time"
 
 	entity "github.com/coroo/form-generator/app/entity"
 	usecases "github.com/coroo/form-generator/app/usecases"
 	"github.com/gin-gonic/gin"
+	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/suite"
 )
 
 // dummy data
-var dummyMasterAnswer = []*entity.MasterQuestion{
-	&entity.MasterQuestion{
+var dummyMasterQuestion = []entity.MasterQuestion{
+	entity.MasterQuestion{
 		ID:           1,
 		QuestionText: "Dummy First Name 1",
 		CreatedAt:    time.Now(),
 		UpdatedAt:    time.Now(),
-	}, &entity.MasterQuestion{
+	}, entity.MasterQuestion{
 		ID:           2,
 		QuestionText: "Dummy Last Name 2",
 		CreatedAt:    time.Now(),
@@ -26,28 +28,40 @@ var dummyMasterAnswer = []*entity.MasterQuestion{
 	},
 }
 
-type serviceMock struct {
+type serviceMockMasterQuestion struct {
 	mock.Mock
 }
 
-func (s *serviceMock) SaveFormGenerator(masterQuestion entity.MasterQuestion) error {
-	return nil
+func (r *serviceMockMasterQuestion) SaveMasterQuestion(masterQuestion entity.MasterQuestion) error {
+	args := r.Called(masterQuestion)
+	if args.Get(0) == nil {
+		return nil
+	}
+	return args.Get(0).(error)
 }
 
-func (s *serviceMock) UpdateFormGenerator(masterQuestion entity.MasterQuestion) error {
-	return nil
+func (r *serviceMockMasterQuestion) UpdateMasterQuestion(masterQuestion entity.MasterQuestion) error {
+	args := r.Called(masterQuestion)
+	if args.Get(0) == nil {
+		return nil
+	}
+	return args.Get(0).(error)
 }
 
-func (s *serviceMock) DeleteFormGenerator(masterQuestion entity.MasterQuestion) error {
-	return nil
+func (r *serviceMockMasterQuestion) DeleteMasterQuestion(masterQuestion entity.MasterQuestion) error {
+	args := r.Called(masterQuestion)
+	if args.Get(0) == nil {
+		return nil
+	}
+	return args.Get(0).(error)
 }
 
-func (s *serviceMock) GetAllMasterQuestions() []entity.MasterQuestion {
-	return nil
+func (r *serviceMockMasterQuestion) GetAllMasterQuestions() []entity.MasterQuestion {
+	return dummyMasterQuestion
 }
 
-func (s *serviceMock) GetMasterQuestion(ctx *gin.Context) []entity.MasterQuestion {
-	return nil
+func (r *serviceMockMasterQuestion) GetMasterQuestion(ctx *gin.Context) []entity.MasterQuestion {
+	return dummyMasterQuestion
 }
 
 type MasterQuestionDeliveryTestSuite struct {
@@ -55,61 +69,58 @@ type MasterQuestionDeliveryTestSuite struct {
 	serviceTest usecases.MasterQuestionService
 }
 
-// func (suite *MasterQuestionDeliveryTestSuite) SetupTest() {
-// 	suite.serviceTest = new(serviceMock)
-// }
+func (suite *MasterQuestionDeliveryTestSuite) SetupTest() {
+	suite.serviceTest = new(serviceMockMasterQuestion)
+}
 
-// func (suite *MasterQuestionDeliveryTestSuite) TestBuildMasterQuestionController() {
-// 	resultTest := NewMasterQuestion(suite.serviceTest)
-// 	var dummyImpl *MasterQuestionController
-// 	assert.NotNil(suite.T(), resultTest)
-// 	assert.Implements(suite.T(), dummyImpl, resultTest)
-// 	// assert.NotNil(suite.T(), resultTest.(*MasterQuestionController).usecases)
-// }
+func (suite *MasterQuestionDeliveryTestSuite) TestBuildMasterQuestionController() {
+	resultTest := NewMasterQuestion(suite.serviceTest)
+	var dummyImpl *MasterQuestionController
+	assert.NotNil(suite.T(), resultTest)
+	assert.Implements(suite.T(), dummyImpl, resultTest)
+}
 
-// func (suite *MasterQuestionDeliveryTestSuite) TestSaveDelivery() {
-// 	// Switch to test mode so you don't get such noisy output
-// 	gin.SetMode(gin.TestMode)
+func (suite *MasterQuestionDeliveryTestSuite) TestSaveMasterQuestionDelivery() {
+	suite.serviceTest.(*serviceMockMasterQuestion).On("SaveMasterQuestion", dummyMasterQuestion[0]).Return(nil)
+	deliveryTest := NewMasterQuestion(suite.serviceTest)
+	err := deliveryTest.Save(dummyMasterQuestion[0])
+	assert.Nil(suite.T(), err)
+}
 
-// 	r := gin.Default()
-// 	w := httptest.NewRecorder()
+func (suite *MasterQuestionDeliveryTestSuite) TestUpdateMasterQuestionDelivery() {
+	suite.serviceTest.(*serviceMockMasterQuestion).On("UpdateMasterQuestion", dummyMasterQuestion[0]).Return(nil)
+	deliveryTest := NewMasterQuestion(suite.serviceTest)
+	err := deliveryTest.Update(dummyMasterQuestion[0])
+	assert.Nil(suite.T(), err)
+}
 
-// 	resultTest := NewMasterQuestion(suite.serviceTest)
-// 	handler := resultTest.(MasterQuestionController).Save
-// 	r.POST("masterAnswer/create", handler)
-// 	// r.POST("masterAnswer/create", NewMasterQuestion(suite.serviceTest).Save)
+func (suite *MasterQuestionDeliveryTestSuite) TestDeleteMasterQuestionDelivery() {
+	suite.serviceTest.(*serviceMockMasterQuestion).On("DeleteMasterQuestion", dummyMasterQuestion[0]).Return(nil)
+	deliveryTest := NewMasterQuestion(suite.serviceTest)
+	err := deliveryTest.Delete(dummyMasterQuestion[0])
+	assert.Nil(suite.T(), err)
+}
 
-// 	jsonValue, _ := json.Marshal(dummyMasterAnswer[0])
-// 	req, _ := http.NewRequest(http.MethodPost, "/masterAnswer/create", bytes.NewBuffer(jsonValue))
-// 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+func (suite *MasterQuestionDeliveryTestSuite) TestGetAllMasterQuestions() {
+	suite.serviceTest.(*serviceMockMasterQuestion).On("GetAllMasterQuestions", dummyMasterQuestion).Return(dummyMasterQuestion)
+	deliveryTest := NewMasterQuestion(suite.serviceTest)
+	dummyUser := deliveryTest.GetAllMasterQuestions()
+	assert.Equal(suite.T(), dummyMasterQuestion, dummyUser)
+}
 
-// 	r.ServeHTTP(w, req)
-// 	assert.Equal(suite.T(), w.Code, 200)
+func (suite *MasterQuestionDeliveryTestSuite) TestGetMasterQuestion() {
+	// Switch to test mode so you don't get such noisy output
+	gin.SetMode(gin.TestMode)
 
-// 	// r.POST("/syUserInvoice/map-etl-payment", routes.SyMapEtlLatestPayment)
+	suite.serviceTest.(*serviceMockMasterQuestion).On("GetMasterQuestion", dummyMasterQuestion[0].ID).Return(dummyMasterQuestion[0], nil)
+	deliveryTest := NewMasterQuestion(suite.serviceTest)
 
-// 	// resultTest := NewMasterQuestion(suite.serviceTest)
-// 	// rr := httptest.NewRecorder()
-// 	// reqBody, _ := json.Marshal(dummyMasterAnswer[0])
-
-// 	// req, _ := http.NewRequest("POST", "api/v1/masterQuestion/create", nil)
-// 	// suite.routerTest.ServeHTTP(rr, req)
-// 	// assert.Equal(suite.T(), rr.Code, 200)
-
-// 	// handler := resultTest.(*MasterQuestionController).save
-// 	// suite.routerTest.HandleFunc("/dummy-user", handler)
-// 	// req, _ := http.NewRequest("POST", "/dummy-user", bytes.NewBuffer(reqBody))
-// 	// req.Header.Set("Content-Type", "application/json")
-
-// 	// suite.routerTest.ServeHTTP(rr, req)
-// 	// respTest := rr.Result()
-// 	// respBody := new(appHttpResponse.Response)
-
-// 	// if err := json.NewDecoder(respTest.Body).Decode(respBody); err != nil {
-// 	// }
-// 	// assert.Equal(suite.T(), rr.Code, 200)
-// 	// assert.Equal(suite.T(), respBody.Data.(map[string]interface{})["firstName"], "Dummy First Name 1")
-// }
+	c, _ := gin.CreateTestContext(httptest.NewRecorder())
+	c.Params = gin.Params{gin.Param{Key: "id", Value: "1"}}
+	dummyUser := deliveryTest.GetMasterQuestion(c)
+	assert.NotNil(suite.T(), dummyUser[0])
+	assert.Equal(suite.T(), dummyMasterQuestion[0], dummyUser[0])
+}
 
 func TestMasterQuestionDeliveryTestSuite(t *testing.T) {
 	suite.Run(t, new(MasterQuestionDeliveryTestSuite))

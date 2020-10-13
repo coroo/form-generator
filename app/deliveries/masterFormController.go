@@ -8,9 +8,9 @@ import (
 )
 
 type MasterFormController interface {
-	Save(ctx *gin.Context) error
-	Update(ctx *gin.Context) error
-	Delete(ctx *gin.Context) error
+	Save(masterForm entity.MasterForm) error
+	Update(masterForm entity.MasterForm) error
+	Delete(masterForm entity.MasterForm) error
 	GetAllMasterForms() []entity.MasterForm
 	GetMasterForm(ctx *gin.Context) []entity.MasterForm
 }
@@ -33,32 +33,17 @@ func (c *masterFormDeliveries) GetMasterForm(ctx *gin.Context) []entity.MasterFo
 	return c.usecases.GetMasterForm(ctx)
 }
 
-func (c *masterFormDeliveries) Save(ctx *gin.Context) error {
-	var masterForm entity.MasterForm
-	err := ctx.ShouldBindJSON(&masterForm)
-	if err != nil {
-		return err
-	}
+func (c *masterFormDeliveries) Save(masterForm entity.MasterForm) error {
 	c.usecases.SaveMasterForm(masterForm)
 	return nil
 }
 
-func (c *masterFormDeliveries) Update(ctx *gin.Context) error {
-	var masterForm entity.MasterForm
-	err := ctx.ShouldBindJSON(&masterForm)
-	if err != nil {
-		return err
-	}
+func (c *masterFormDeliveries) Update(masterForm entity.MasterForm) error {
 	c.usecases.UpdateMasterForm(masterForm)
 	return nil
 }
 
-func (c *masterFormDeliveries) Delete(ctx *gin.Context) error {
-	var masterForm entity.MasterForm
-	err := ctx.ShouldBindJSON(&masterForm)
-	if err != nil {
-		return err
-	}
+func (c *masterFormDeliveries) Delete(masterForm entity.MasterForm) error {
 	c.usecases.DeleteMasterForm(masterForm)
 	return nil
 }

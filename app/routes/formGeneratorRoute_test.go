@@ -39,15 +39,15 @@ type formGeneratorRouteMock struct {
 	mock.Mock
 }
 
-func (s *formGeneratorRouteMock) Save(ctx *gin.Context) error {
+func (s *formGeneratorRouteMock) Save(formGenerator entity.FormGenerator) error {
 	return nil
 }
 
-func (s *formGeneratorRouteMock) Update(ctx *gin.Context) error {
+func (s *formGeneratorRouteMock) Update(formGenerator entity.FormGenerator) error {
 	return nil
 }
 
-func (s *formGeneratorRouteMock) Delete(ctx *gin.Context) error {
+func (s *formGeneratorRouteMock) Delete(formGenerator entity.FormGenerator) error {
 	return nil
 }
 

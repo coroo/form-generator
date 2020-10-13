@@ -8,9 +8,9 @@ import (
 )
 
 type FormGeneratorController interface {
-	Save(ctx *gin.Context) error
-	Update(ctx *gin.Context) error
-	Delete(ctx *gin.Context) error
+	Save(formGenerator entity.FormGenerator) error
+	Update(formGenerator entity.FormGenerator) error
+	Delete(formGenerator entity.FormGenerator) error
 	GetAllFormGenerators() []entity.FormGenerator
 	GetFormGenerator(ctx *gin.Context) []entity.FormGenerator
 }
@@ -33,32 +33,17 @@ func (c *formGeneratorDeliveries) GetFormGenerator(ctx *gin.Context) []entity.Fo
 	return c.usecases.GetFormGenerator(ctx)
 }
 
-func (c *formGeneratorDeliveries) Save(ctx *gin.Context) error {
-	var formGenerator entity.FormGenerator
-	err := ctx.ShouldBindJSON(&formGenerator)
-	if err != nil {
-		return err
-	}
+func (c *formGeneratorDeliveries) Save(formGenerator entity.FormGenerator) error {
 	c.usecases.SaveFormGenerator(formGenerator)
 	return nil
 }
 
-func (c *formGeneratorDeliveries) Update(ctx *gin.Context) error {
-	var formGenerator entity.FormGenerator
-	err := ctx.ShouldBindJSON(&formGenerator)
-	if err != nil {
-		return err
-	}
+func (c *formGeneratorDeliveries) Update(formGenerator entity.FormGenerator) error {
 	c.usecases.UpdateFormGenerator(formGenerator)
 	return nil
 }
 
-func (c *formGeneratorDeliveries) Delete(ctx *gin.Context) error {
-	var formGenerator entity.FormGenerator
-	err := ctx.ShouldBindJSON(&formGenerator)
-	if err != nil {
-		return err
-	}
+func (c *formGeneratorDeliveries) Delete(formGenerator entity.FormGenerator) error {
 	c.usecases.DeleteFormGenerator(formGenerator)
 	return nil
 }

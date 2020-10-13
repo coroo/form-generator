@@ -37,15 +37,15 @@ type masterQuestionRouteMock struct {
 	mock.Mock
 }
 
-func (s *masterQuestionRouteMock) Save(ctx *gin.Context) error {
+func (s *masterQuestionRouteMock) Save(masterQuestion entity.MasterQuestion) error {
 	return nil
 }
 
-func (s *masterQuestionRouteMock) Update(ctx *gin.Context) error {
+func (s *masterQuestionRouteMock) Update(masterQuestion entity.MasterQuestion) error {
 	return nil
 }
 
-func (s *masterQuestionRouteMock) Delete(ctx *gin.Context) error {
+func (s *masterQuestionRouteMock) Delete(masterQuestion entity.MasterQuestion) error {
 	return nil
 }
 

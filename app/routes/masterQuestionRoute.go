@@ -1,9 +1,11 @@
 package routes
 
 import (
+	"fmt"
 	"net/http"
 
 	deliveries "github.com/coroo/form-generator/app/deliveries"
+	"github.com/coroo/form-generator/app/entity"
 	repositories "github.com/coroo/form-generator/app/repositories"
 	usecases "github.com/coroo/form-generator/app/usecases"
 
@@ -65,7 +67,10 @@ func MasterQuestionsDetail(c *gin.Context) {
 // @Failure 401 {object} dto.Response
 // @Router /masterQuestion/create [post]
 func MasterQuestionCreate(c *gin.Context) {
-	masterQuestion := masterQuestionController.Save(c)
+	var masterQuestionEntity entity.MasterQuestion
+	fmt.Println(c.Request.Body)
+	c.ShouldBindJSON(&masterQuestionEntity)
+	masterQuestion := masterQuestionController.Save(masterQuestionEntity)
 	if masterQuestion != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": masterQuestion.Error()})
 	} else {
@@ -86,7 +91,10 @@ func MasterQuestionCreate(c *gin.Context) {
 // @Failure 401 {object} dto.Response
 // @Router /masterQuestion/update [put]
 func MasterQuestionUpdate(c *gin.Context) {
-	masterQuestion := masterQuestionController.Update(c)
+	var masterQuestionEntity entity.MasterQuestion
+	fmt.Println(c.Request.Body)
+	c.ShouldBindJSON(&masterQuestionEntity)
+	masterQuestion := masterQuestionController.Update(masterQuestionEntity)
 	if masterQuestion != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": masterQuestion.Error()})
 	} else {
@@ -107,7 +115,10 @@ func MasterQuestionUpdate(c *gin.Context) {
 // @Failure 401 {object} dto.Response
 // @Router /masterQuestion/delete [delete]
 func MasterQuestionDelete(c *gin.Context) {
-	masterQuestion := masterQuestionController.Delete(c)
+	var masterQuestionEntity entity.MasterQuestion
+	fmt.Println(c.Request.Body)
+	c.ShouldBindJSON(&masterQuestionEntity)
+	masterQuestion := masterQuestionController.Delete(masterQuestionEntity)
 	if masterQuestion != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": masterQuestion.Error()})
 	} else {

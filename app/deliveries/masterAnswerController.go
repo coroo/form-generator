@@ -8,9 +8,9 @@ import (
 )
 
 type MasterAnswerController interface {
-	Save(ctx *gin.Context) error
-	Update(ctx *gin.Context) error
-	Delete(ctx *gin.Context) error
+	Save(masterAnswer entity.MasterAnswer) error
+	Update(masterAnswer entity.MasterAnswer) error
+	Delete(masterAnswer entity.MasterAnswer) error
 	GetAllMasterAnswers() []entity.MasterAnswer
 	GetMasterAnswer(ctx *gin.Context) []entity.MasterAnswer
 	GetMasterAnswerByQuestion(ctx *gin.Context) []entity.MasterAnswer
@@ -38,32 +38,17 @@ func (c *masterAnswerDeliveries) GetMasterAnswerByQuestion(ctx *gin.Context) []e
 	return c.usecases.GetMasterAnswerByQuestion(ctx)
 }
 
-func (c *masterAnswerDeliveries) Save(ctx *gin.Context) error {
-	var masterAnswer entity.MasterAnswer
-	err := ctx.ShouldBindJSON(&masterAnswer)
-	if err != nil {
-		return err
-	}
+func (c *masterAnswerDeliveries) Save(masterAnswer entity.MasterAnswer) error {
 	c.usecases.SaveMasterAnswer(masterAnswer)
 	return nil
 }
 
-func (c *masterAnswerDeliveries) Update(ctx *gin.Context) error {
-	var masterAnswer entity.MasterAnswer
-	err := ctx.ShouldBindJSON(&masterAnswer)
-	if err != nil {
-		return err
-	}
+func (c *masterAnswerDeliveries) Update(masterAnswer entity.MasterAnswer) error {
 	c.usecases.UpdateMasterAnswer(masterAnswer)
 	return nil
 }
 
-func (c *masterAnswerDeliveries) Delete(ctx *gin.Context) error {
-	var masterAnswer entity.MasterAnswer
-	err := ctx.ShouldBindJSON(&masterAnswer)
-	if err != nil {
-		return err
-	}
+func (c *masterAnswerDeliveries) Delete(masterAnswer entity.MasterAnswer) error {
 	c.usecases.DeleteMasterAnswer(masterAnswer)
 	return nil
 }
