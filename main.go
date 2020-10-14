@@ -35,7 +35,7 @@ func main() {
 		if err_1 != nil {
 			log.Fatal(err_1)
 		}
-		err_2 := os.Mkdir("storage/logs/errors", 0755)
+		err_2 := os.Mkdir("storage/logs/information", 0755)
 		if err_2 != nil {
 			log.Fatal(err_2)
 		}
