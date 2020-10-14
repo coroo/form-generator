@@ -1,7 +1,9 @@
 # Form Generator
 
 :bulb: By using this app, I hope that user can create a simple dynamic form based on their needs. 
-> Please read [how the app work section](#mag-how-the-app-works-) for overall flow.
+> Please read [how the app work section](#mag-how-the-app-works-) for overall flow or view this video below:
+
+<a href="https://www.loom.com/share/bf4b9e7e4c944158a5179c1837301bad"> <img style="max-width:300px;" src="https://cdn.loom.com/sessions/thumbnails/bf4b9e7e4c944158a5179c1837301bad-with-play.gif"> <p>Create your own dynamic form - Watch Video</p> </a>
 
 ### App Information
 This app use [gin](https://github.com/gin-gonic/gin) as a framework, [gorm](https://gorm.io/index.html) as an ORM and [go-swagger](https://github.com/go-swagger/go-swagger) as API documentation.
