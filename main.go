@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"os"
 
 	"github.com/coroo/form-generator/app/middlewares"
@@ -23,10 +24,29 @@ func main() {
 	docs.SwaggerInfo.BasePath = "/api/v1"
 	docs.SwaggerInfo.Schemes = []string{"http", "https"}
 
+	_, err := os.Stat("storage/logs")
+
+	if os.IsNotExist(err) {
+		err_1 := os.Mkdir("storage/logs/errors", 0755)
+		if err_1 != nil {
+			log.Fatal(err_1)
+		}
+		err_2 := os.Mkdir("storage/logs/errors", 0755)
+		if err_2 != nil {
+			log.Fatal(err_2)
+		}
+	}
+
 	router := gin.Default()
 	router.Use(middlewares.BasicAuth(), middlewares.Logger())
 
 	API_PREFIX := os.Getenv("API_PREFIX")
+
+	router.GET("/", func(c *gin.Context) {
+		c.JSON(404, gin.H{
+			"message": os.Getenv("MAIN_DESCRIPTION"),
+		})
+	})
 
 	masterQuestionsGroup := router.Group(API_PREFIX + "masterQuestion")
 	{
